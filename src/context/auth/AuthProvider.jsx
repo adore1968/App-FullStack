@@ -65,21 +65,24 @@ function AuthProvider({ children }) {
         const token = Cookies.get("token");
         if (!token) {
           setUser(null);
-          return setIsAuth(false);
+          setIsAuth(false);
+          return setIsLoading(false)
         }
         const res = await verifyRequest();
         if (!res.data) {
           setUser(null);
-          return setIsAuth(false);
+          setIsAuth(false);
+          return setIsLoading(false);
         }
         setUser(res.data);
         setIsAuth(true);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
         setUser(null);
         setIsAuth(false);
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
     checkToken();
   }, []);
